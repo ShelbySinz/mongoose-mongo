@@ -42,18 +42,18 @@ app.get("/scrape", function(req, res) {
       var $ = cheerio.load(response.data);
   
       // Now, we grab every h2 within an article tag, and do the following:
-      $("article h3").each(function(i, element) {
+      $("article").each(function(i, element) {
         // Save an empty result object
 
         // Add the text and href of every link, and save them as properties of the result object
-        var title = $(element)
-          .children("a")
+        var title = $(this)
+          .find( ".node__title a")
           .text();
-        var link = $(element)
-          .children("a")
+        var link = $(this)
+          .find(".node__title a")
           .attr("href");
-        var summary = $(element)
-          .children("p");  
+        var summary = $(this)
+          .find("p");  
   
         // Create a new Article using the `result` object built from scraping
         db.Article.create({
@@ -92,9 +92,34 @@ app.get("/scrape", function(req, res) {
   });
 
 
+app.put("/articles/:id", function(req, res){
+    db.Article.updateOne({_id: req.params.id}, {favorite: true})
+    .then(function(updatedFavorite){
+        res.json(updatedFavorite);
+        console.log(updatedFavorite);
+    })
+    .catch(function(err){
+        res.json(err);
+    });
+});
 
+app.post("/note/:id", function(req, res) {
+    // Create a new note and pass the req.body to the entry
+    db.Note.create(req.body)
+      .then(function(dbNote) {
+                  
+                res.json(dbNote);
+             })
+          console.log(dbNote);
+      });
+      
+ 
 
-
+app.delete("/delete", function(req, res){
+  db.Article.remove({}).then(function(){
+      console.log("deleted all articles")
+  })
+})
 
 
 

@@ -1,9 +1,20 @@
+
+
+
+
 <div class="parallax-container">
         <div class="parallax"><img src="background4.jpg" style= "opacity: 0.5;" ></div>
          <br>
-         <button class="btn waves-effect waves-light scrape" action= "/scrape" method= "post" >Start Scraping</button>
-  
+         <br>
+         <br>
+         <br>
+         <div class = "row">
+            <div class="col s6 offset-s4">
+         <button class="btn waves-effect waves-light scrape" action= "/scrape" method="POST">Start Scraping</button>
+          <button class="btn waves-effect waves-light deletescrape" >Delete Scrape</button> 
         </div>
+           </div>
+         </div>
  <div class="row">
     <div class="col s12">
       <ul class="tabs">
@@ -15,41 +26,76 @@
     </div>
     <div id="test1" class="col s12">
        {{#each articles}}
-         <div  class = "card blue-grey" data-id= "{{_id}}">
+         <div  class = "card blue-grey">
            <a href= "{{link}}"></a>
          <h4 class = "center-align white-text" style=  "font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" >{{title}}</h4>
-         <p class = "center-align">{{summary}}</p>
-          <i class= "small material-icons favorite">favorite_border</i>
+         <p class="center-align">{{summary}}</p>
+          <i class= "small material-icons favorite" data-id= "{{id}}" >favorite_border</i>
          </div>
 
        {{/each}}
 
     </div>
-
+     <div class="row"></div>
     <div id="test2" class="col s12">
     {{#each articles}}
     {{#if favorite}}
-       <div  class = "card blue-grey" data-id= "{{_id}}">
+       <div  class = "card grey" data-id= "{{id}}">
            <a href= "{{link}}"></a>
          <h4 class = "center-align white-text" style=  "font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" >{{title}}</h4>
-         <p class = "center-align">{{summary}}</p>
+         <h6 class = "center-align">{{summary}}</h6>
        </div>
+
+         <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Notes</a>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <form data-id="{{id}}" class= "newNote" action="/note/:id" method="POST">
+          <div class = "row">
+          <div class="input-field col s6">
+            <label for="input_text" value = "{{title}}" class= "text">{{title}}</label>
+          </div>
+         </div>
+         <br>
+        <div class = "row">
+          <div class="input-field col s6">
+            <textarea id="textarea2" class="materialize-textarea messagearea" data-length="120"></textarea>
+            <label for="textarea2">Textarea</label>
+            <button  type = "submit ">Submit</button>
+          </div>
+        </div>
+        </form>
+
+    </div>
+    
+  </div>
     {{/if}}
     {{/each}}
+    
+   
+      
+        
+      
     </div>
-    <div id="test3" class="col s12">Test 3</div>
+    </div>
+    <div id="test3" class="col s12">
+        {{#each Note}}
+         <div class="row">
+    <div class="col s12 m5">
+      <div class="card-panel teal">
+        <span class="white-text">
+          <h5>{{title}}</h5>
+          <p>{{body}}</p>
+        </span>
+      </div>
+    </div>
+  </div>
+        {{/each}}
+    </div>
     
   </div>
 
   <div class="parallax-container">
         <div class="parallax"><img src="background4.jpg" style= "opacity: 0.5;" ></div>
         </div>
-
-
-<script>
-     $(document).ready(function(){
-    $('.tabs').tabs();
-
-    $('.parallax').parallax();
-  });
-</script>
