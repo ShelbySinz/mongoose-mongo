@@ -79,7 +79,7 @@ app.get("/scrape", function(req, res) {
   
   app.get("/", function(req, res) {
     // TODO: Finish the route so it grabs all of the articles
-    db.Article.find({})
+    db.Article.find({}).populate("note")
     .then(function(dbArticle){
         var hbsobj = {
             articles: dbArticle
@@ -91,6 +91,17 @@ app.get("/scrape", function(req, res) {
     });
   });
 
+  app.get("/notes", function(req, res){
+      db.Note.find({}).then(function(notes){
+          var hbsobj = {
+              notes : notes
+          };
+          res.render("index", hbsobj)
+      })
+      .catch(function(err){
+          res.json(err);
+      });
+  });
 
 app.put("/articles/:id", function(req, res){
     db.Article.updateOne({_id: req.params.id}, {favorite: true})
@@ -105,13 +116,15 @@ app.put("/articles/:id", function(req, res){
 
 app.post("/note/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
-    db.Note.create(req.body)
-      .then(function(dbNote) {
-                  
-                res.json(dbNote);
-             })
-          console.log(dbNote);
-      });
+db.Note.create(req.body).then(function(dbnote){
+    
+    res.json(dbnote);
+    console.log(dbnote);
+
+}).catch(function(err){
+    res.json(err);
+});
+});
       
  
 

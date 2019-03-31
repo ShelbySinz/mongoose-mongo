@@ -6,11 +6,16 @@
         <div class="parallax"><img src="background4.jpg" style= "opacity: 0.5;" ></div>
          <br>
          <br>
+         <div class = "row">
+             <div class = "col s6 offset-s4">
+         <h3>Realtor Scraper</h3>
+            </div>
+         </div>
          <br>
          <br>
          <div class = "row">
             <div class="col s6 offset-s4">
-         <button class="btn waves-effect waves-light scrape" action= "/scrape" method="POST">Start Scraping</button>
+         <button class="btn waves-effect waves-light scrape">Start Scraping</button>
           <button class="btn waves-effect waves-light deletescrape" >Delete Scrape</button> 
         </div>
            </div>
@@ -20,7 +25,7 @@
       <ul class="tabs">
         <li class="tab col s3"><a class = "active"href="#test1">Articles</a></li>
         <li class="tab col s3"><a class="active" href="#test2">Saved Articles</a></li>
-        <li class="tab col s3"><a class= "active" href="#test3">Notes</a></li>
+        <li class="tab col s3" id = "noteTab" method="GET" action="/notes"><a class= "active" href="#test3">Notes</a></li>
         
       </ul>
     </div>
@@ -51,10 +56,13 @@
   <!-- Modal Structure -->
   <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
-      <form data-id="{{id}}" class= "newNote" action="/note/:id" method="POST">
+        {{!-- method= "POST" action="/note/:id" --}}
+        <p>Note for: {{title}}<p>
+      <form data-id="{{id}}" class= "newNote" >
           <div class = "row">
           <div class="input-field col s6">
-            <label for="input_text" value = "{{title}}" class= "text">{{title}}</label>
+              <input id="input_text" class = "text" type="text" data-length="10">
+            <label for="input_text" >Message</label>
           </div>
          </div>
          <br>
@@ -80,7 +88,8 @@
     </div>
     </div>
     <div id="test3" class="col s12">
-        {{#each Note}}
+        <button class="btn waves-effect waves-light ShowNotes" >view notes</button> 
+        {{#each notes}}
          <div class="row">
     <div class="col s12 m5">
       <div class="card-panel teal">
