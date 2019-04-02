@@ -15,16 +15,16 @@
  
 
 
-    //   $(".scrape").on("click", function(){
-    //       alert("Articles have been scraped")
+      $(document).on("click", ".scrape", function(){
+          alert("Articles have been scraped")
 
-    //        $.ajax("/scrape", {
-    //         type: "POST",
-    //        }).then(function(){
+           $.ajax("/scrape", {
+            type: "GET",
+           }).then(function(){
                
-    //        });
-          
-    //   });
+           });
+          location.reload();
+      });
 
   $(".favorite").on("click", function(){
      

@@ -73,7 +73,7 @@ app.get("/scrape", function(req, res) {
       });
   
       // Send a message to the client
-      res.redirect("/");
+      
     });
   });
   
