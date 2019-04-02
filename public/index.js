@@ -15,16 +15,16 @@
  
 
 
-      $(".scrape").on("click", function(){
-          alert("Articles have been scraped")
+    //   $(".scrape").on("click", function(){
+    //       alert("Articles have been scraped")
 
-           $.ajax("/scrape", {
-            type: "POST",
-           }).then(function(){
+    //        $.ajax("/scrape", {
+    //         type: "POST",
+    //        }).then(function(){
                
-           });
-           location.reload();
-      });
+    //        });
+          
+    //   });
 
   $(".favorite").on("click", function(){
      
@@ -47,9 +47,8 @@ $(".newNote").on("submit", function(event){
     event.preventDefault();
 
     var id = $(this).attr("data-id");
-    
+    console.log(id);
     var newNote = {
-        title: $(".text").val(),
         body: $(".messagearea").val().trim()
     }
     console.log(newNote)
@@ -59,7 +58,7 @@ $(".newNote").on("submit", function(event){
         data: newNote
 }).then(function(data){
       console.log(data);
-      
+     
 });
 location.reload();
 });
@@ -79,10 +78,22 @@ $(".deletescrape").on("click", function(event) {
       location.reload();
   });
 
-
-  $("#noteTab").on("click", function(event){
-      $.ajax("/notes", {
-          type: "GET"
+  $(".deletenote").on("click", function(){
+     var id =  $(this).attr("data-id");
+      $.ajax("/deleteNote/" + id, {
+          type: "DELETE"
       }).then(function(){
+          console.log("deleted this note " + id)
       });
+      location.reload()
   });
+
+
+//   $("#getnote").on("click", function(){
+//     var id = $(this).attr("data-id");
+//       $.ajax("/notes/" + id, {
+//           type: "GET"
+//       }).then(function(data){
+//           console.log(data);
+//       });
+//   });

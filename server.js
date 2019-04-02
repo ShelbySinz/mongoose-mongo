@@ -73,30 +73,37 @@ app.get("/scrape", function(req, res) {
       });
   
       // Send a message to the client
-      res.json(dbArticle);
+      res.redirect("/");
     });
   });
   
   app.get("/", function(req, res) {
-    // TODO: Finish the route so it grabs all of the articles
+    
     db.Article.find({}).populate("note")
     .then(function(dbArticle){
-        var hbsobj = {
-            articles: dbArticle
-        };
-        res.render("index", hbsobj);
-    })
-    .catch(function(err){
-      res.json(err);
-    });
-  });
+        
+         
+            // var notebody= data[0].dataValues.Note.dataValues.body;
+            var hbsobj = {
+                articles: dbArticle,
+               
+                // notes: notebody
+            };
 
-  app.get("/notes", function(req, res){
-      db.Note.find({}).then(function(notes){
-          var hbsobj = {
-              notes : notes
-          };
-          res.render("index", hbsobj)
+            res.render("index", hbsobj);
+            console.log(hbsobj);
+    });
+    });
+   
+
+  app.get("/notes/:id", function(req, res){
+      db.Article.findOne({_id: req.params.id }).populate("note").then(function(notes){
+        //    var obj= {
+        //        note:notes
+        //    }
+        //   res.render("index", obj)
+        //   console.log(notes);
+        res.json(notes)
       })
       .catch(function(err){
           res.json(err);
@@ -117,9 +124,12 @@ app.put("/articles/:id", function(req, res){
 app.post("/note/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
 db.Note.create(req.body).then(function(dbnote){
-    
-    res.json(dbnote);
     console.log(dbnote);
+   return db.Article.findOneAndUpdate({ _id: req.params.id },{note: dbnote._id} ,{new: true});
+})
+.then(function(dbArticle) {
+   console.log(dbArticle);
+   
 
 }).catch(function(err){
     res.json(err);
@@ -131,11 +141,16 @@ db.Note.create(req.body).then(function(dbnote){
 app.delete("/delete", function(req, res){
   db.Article.remove({}).then(function(){
       console.log("deleted all articles")
-  })
-})
+  });
+});
 
 
+app.delete("/deleteNote/:id", function(req, res){
+    db.Note.remove({_id: req.params.id}).then(function(){
+        console.log("deleted note");
+    });
 
+});
 
 
 
