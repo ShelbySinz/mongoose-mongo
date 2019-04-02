@@ -59,7 +59,7 @@
                  <p class = "center-align white-text">{{note.body}}</p>
                  
                  
-                 <button class= "btn waves-light deletenote right" data-id={{note._id}}>Delete</button>
+                 <button class= "btn waves-light deletenote right" data-id={{note._id}}>X Note</button>
                  
                 {{/if}}
 
@@ -69,10 +69,10 @@
          
          <br>
         <div class = "row">
-          <div class="input-field col s6">
+          <div class="input-field col s3">
             <textarea id="textarea" class="textarea messagearea {{id}}"  data-length="120"></textarea>
             <label for="textarea" class = "white-text">Textarea</label>
-            <button class= "waves-effect waves-light btn" type = "submit ">Submit</button>
+            <button class= "waves-effect waves-light btn" type = "submit ">Add Note</button>
           </div>
         </div>
         </form>
