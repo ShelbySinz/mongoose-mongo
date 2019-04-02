@@ -32,10 +32,11 @@
     <div id="test1" class="col s12">
        {{#each articles}}
          <div  class = "card blue-grey">
-           <a href= "{{link}}"></a>
+           
          <h4 class = "center-align white-text" style=  "font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" >{{title}}</h4>
          <p class="center-align">{{summary}}</p>
           <i class= "small material-icons favorite" data-id= "{{id}}" >favorite_border</i>
+         <a href= "http://magazine.realtor{{link}}">View article</a>
          </div>
 
        {{/each}}
@@ -46,10 +47,10 @@
     {{#each articles}}
     {{#if favorite}}
        <div  class = "card grey" id="getnote" data-id= "{{id}}">
-           <a href= "{{link}}"></a>
+          
          <h4 class = "center-align white-text" style=  "font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" >{{title}}</h4>
          <h6 class = "center-align">{{summary}}</h6>
-          
+           <a href= "http://magazine.realtor{{link}}">View Article</a>
 
           <br>
           
