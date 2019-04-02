@@ -47,9 +47,11 @@ $(".newNote").on("submit", function(event){
     event.preventDefault();
 
     var id = $(this).attr("data-id");
+    
     console.log(id);
+    
     var newNote = {
-        body: $(".messagearea").val().trim()
+        body: $("."+id).val()
     }
     console.log(newNote)
     
